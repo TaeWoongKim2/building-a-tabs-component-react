@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 
-import Tab from "./Tab";
+import styled from 'styled-components'
 
+import Tab from './Tab';
 
-const Tabs = (props) => {
-  const { children } = props;
+const TabList = styled.ol`
+  border-bottom: 1px solid #ccc;
+  padding-left: 0;
+`
 
+const TabContent = styled.div`
+  /* ... */
+`
+
+const Tabs = ({ children }) => {
   const [ activeTab, setActiveTab ] = useState(children[0].props.label);
 
   const handleClickTab = (tab) => {
@@ -14,7 +22,7 @@ const Tabs = (props) => {
 
   return (
     <div className="tabs">
-      <ol className="tab-list">
+      <TabList>
         {children.map((child) => {
           const { label } = child.props;
           return (
@@ -26,10 +34,10 @@ const Tabs = (props) => {
             />
           );
         })}
-      </ol>
-      <div className="tab-content">
+      </TabList>
+      <TabContent>
         {children.map((child) => (child.props.label === activeTab) ? child.props.children : null )}
-      </div>
+      </TabContent>
     </div>
   );
 };
