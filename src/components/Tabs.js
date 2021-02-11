@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 
+import TabItem from './TabItem';
+
 import styled from 'styled-components'
 
-import Tab from './Tab';
 
 const TabList = styled.ol`
   border-bottom: 1px solid #ccc;
   padding-left: 0;
-`
-
-const TabContent = styled.div`
-  /* ... */
-`
+`;
+const Tab = styled.div``;
+const TabContent = styled.div``;
 
 const Tabs = ({ children }) => {
   const [ activeTab, setActiveTab ] = useState(children[0].props.label);
@@ -23,23 +22,21 @@ const Tabs = ({ children }) => {
   return (
     <div className="tabs">
       <TabList>
-        {children.map((child) => {
-          const { label } = child.props;
+        {children.map(({ props: { label }}) => {
           return (
-            <Tab
-              label={label}
-              activeTab={activeTab}
+            <TabItem
               key={label}
+              label={label}
+              active={label === activeTab}
               onClick={handleClickTab}
             />
           );
         })}
       </TabList>
-      <TabContent>
-        {children.map((child) => (child.props.label === activeTab) ? child.props.children : null )}
-      </TabContent>
+      {children.map(({ props }) => (props.label === activeTab) ? props.children : null )}
     </div>
   );
 };
 
 export default Tabs;
+export { Tab, TabContent };
